@@ -1,0 +1,105 @@
+<div class="admin-topbar">
+  <div>
+    <h1>Novedades</h1>
+    <p>Creá, editá y publicá las noticias del programa.</p>
+  </div>
+  <div class="admin-actions">
+    <a class="btn-cdc btn-cdc-sm" routerLink="/admin/novedades/nueva">Nueva novedad</a>
+  </div>
+</div>
+
+@if (message()) {
+  <div class="alert-cdc alert-success" role="status">{{ message() }}</div>
+}
+
+<div class="admin-card">
+  <div class="filters" style="margin-bottom: 16px">
+    <button type="button" class="filter-chip" [class.active]="status() === ''" (click)="filterStatus('')">
+      Todas
+    </button>
+    <button type="button" class="filter-chip" [class.active]="status() === 'PUBLISHED'" (click)="filterStatus('PUBLISHED')">
+      Publicadas
+    </button>
+    <button type="button" class="filter-chip" [class.active]="status() === 'DRAFT'" (click)="filterStatus('DRAFT')">
+      Borradores
+    </button>
+    <button type="button" class="filter-chip" [class.active]="status() === 'ARCHIVED'" (click)="filterStatus('ARCHIVED')">
+      Archivadas
+    </button>
+    <div class="search-box">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" /><path d="m16 16 5 5" />
+      </svg>
+      <input
+        type="search"
+        placeholder="Buscar por título"
+        [value]="query()"
+        (input)="search($any($event.target).value)"
+        aria-label="Buscar novedades"
+      />
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton" style="height: 260px"></div>
+  } @else if (posts().length === 0) {
+    <div class="empty-state">
+      <h3>No hay novedades con esos filtros</h3>
+      <p>Probá con otro estado o creá una nueva nota.</p>
+      <a class="btn-cdc" routerLink="/admin/novedades/nueva">Nueva novedad</a>
+    </div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table-cdc">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Estado</th>
+            <th>Publicada</th>
+            <th>Destacada</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (post of posts(); track post.id) {
+            <tr>
+              <td><strong>{{ post.title }}</strong></td>
+              <td>{{ post.category?.name ?? '—' }}</td>
+              <td>
+                <span [class]="'badge-status badge-' + post.status.toLowerCase()">
+                  {{ post.status === 'PUBLISHED' ? 'Publicada' : post.status === 'DRAFT' ? 'Borrador' : 'Archivada' }}
+                </span>
+              </td>
+              <td>{{ formatDate(post.publishedAt) }}</td>
+              <td>
+                <span [class]="'badge-status ' + (post.featured ? 'badge-yes' : 'badge-no')">
+                  {{ post.featured ? 'Sí' : 'No' }}
+                </span>
+              </td>
+              <td>
+                <div class="d-flex gap-1 flex-wrap">
+                  <a class="btn-link-cdc" [routerLink]="['/admin/novedades', post.id]">Editar</a>
+                  @if (post.status === 'PUBLISHED') {
+                    <button type="button" class="btn-link-cdc" (click)="changeStatus(post, 'DRAFT')">Despublicar</button>
+                  } @else {
+                    <button type="button" class="btn-link-cdc" (click)="changeStatus(post, 'PUBLISHED')">Publicar</button>
+                  }
+                  <button type="button" class="btn-link-cdc" style="color: #b91c1c" (click)="remove(post)">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (totalPages() > 1) {
+      <nav class="pagination-cdc" aria-label="Paginación">
+        <button type="button" class="page-btn" [disabled]="page() === 1" (click)="goToPage(page() - 1)">←</button>
+        <span class="small muted">Página {{ page() }} de {{ totalPages() }}</span>
+        <button type="button" class="page-btn" [disabled]="page() === totalPages()" (click)="goToPage(page() + 1)">→</button>
+      </nav>
+    }
+  }
+</div>

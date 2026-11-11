@@ -1,0 +1,138 @@
+<div class="admin-topbar">
+  <div>
+    <h1>{{ editingId() ? 'Editar novedad' : 'Nueva novedad' }}</h1>
+    <p>{{ editingId() ? 'Actualizá el contenido y guardá los cambios.' : 'Completá los datos para publicar una nueva nota.' }}</p>
+  </div>
+  <div class="admin-actions">
+    <a class="btn-cdc-outline btn-cdc-sm" routerLink="/admin/novedades">← Volver</a>
+  </div>
+</div>
+
+@if (error()) {
+  <div class="alert-cdc alert-error" role="alert">{{ error() }}</div>
+}
+
+@if (loading()) {
+  <div class="skeleton" style="height: 420px"></div>
+} @else {
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate class="admin-form">
+    <div class="admin-card">
+      <div class="form-grid">
+        <div class="form-field full">
+          <label class="form-label" for="title">Título *</label>
+          <input id="title" class="form-control-cdc" type="text" formControlName="title" maxlength="220" />
+          @if (form.controls.title.touched && form.controls.title.invalid) {
+            <span class="form-error">El título debe tener al menos 5 caracteres.</span>
+          }
+        </div>
+
+        <div class="form-field full">
+          <label class="form-label" for="excerpt">Copete *</label>
+          <textarea id="excerpt" class="form-textarea-cdc" style="min-height: 90px" formControlName="excerpt" maxlength="400"></textarea>
+          @if (form.controls.excerpt.touched && form.controls.excerpt.invalid) {
+            <span class="form-error">El copete debe tener al menos 20 caracteres.</span>
+          }
+        </div>
+
+        <div class="form-field full">
+          <label class="form-label" for="content">Contenido *</label>
+          <textarea id="content" class="form-textarea-cdc" style="min-height: 320px" formControlName="content"></textarea>
+          <span class="form-hint">
+            Separá los párrafos con una línea en blanco. Podés usar “## Título”
+            para un subtítulo.
+          </span>
+          @if (form.controls.content.touched && form.controls.content.invalid) {
+            <span class="form-error">El contenido debe tener al menos 20 caracteres.</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-head">
+        <h2>Publicación y metadatos</h2>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label" for="categoryId">Categoría *</label>
+          <select id="categoryId" class="form-select-cdc" formControlName="categoryId">
+            @for (category of categories(); track category.id) {
+              <option [value]="category.id">{{ category.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="status">Estado</label>
+          <select id="status" class="form-select-cdc" formControlName="status">
+            <option value="DRAFT">Borrador</option>
+            <option value="PUBLISHED">Publicada</option>
+            <option value="ARCHIVED">Archivada</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="publishedAt">Fecha de publicación</label>
+          <input id="publishedAt" class="form-control-cdc" type="datetime-local" formControlName="publishedAt" />
+          <span class="form-hint">Si la dejás vacía y publicás, se usa la fecha actual.</span>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Destacada</label>
+          <label style="display: flex; gap: 8px; align-items: center; font-size: 0.86rem; color: var(--muted); padding-top: 8px">
+            <input type="checkbox" formControlName="featured" />
+            Mostrar como destacada
+          </label>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="seoTitle">Título SEO</label>
+          <input id="seoTitle" class="form-control-cdc" type="text" formControlName="seoTitle" maxlength="180" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="seoDescription">Descripción SEO</label>
+          <input id="seoDescription" class="form-control-cdc" type="text" formControlName="seoDescription" maxlength="300" />
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-head">
+        <h2>Imagen de portada</h2>
+      </div>
+
+      @if (coverUrl(); as url) {
+        <img [src]="url" alt="Portada actual" style="max-width: 420px; width: 100%; border-radius: 14px; border: 1px solid var(--line)" />
+        <div class="d-flex gap-1 mt-2">
+          <button type="button" class="btn-cdc-outline btn-cdc-sm" (click)="removeCover()">Quitar portada</button>
+        </div>
+      }
+
+      <div class="form-grid mt-2">
+        <div class="form-field">
+          <label class="form-label" for="coverFile">Subir imagen</label>
+          <input id="coverFile" class="form-control-cdc" type="file" accept="image/jpeg,image/png,image/webp,image/avif" (change)="onFileSelected($event)" [disabled]="uploading()" />
+          <span class="form-hint">JPG, PNG, WebP o AVIF. Máximo 5 MB.</span>
+          @if (uploading()) {
+            <span class="form-hint">Subiendo imagen...</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="coverAlt">Texto alternativo</label>
+          <input id="coverAlt" class="form-control-cdc" type="text" formControlName="coverAlt" maxlength="300" />
+          <span class="form-hint">Describí la imagen para quienes usan lector de pantalla.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-form-actions">
+      <button class="btn-cdc" type="submit" [disabled]="saving() || uploading()">
+        {{ saving() ? 'Guardando...' : 'Guardar novedad' }}
+      </button>
+      <a class="btn-cdc-outline" routerLink="/admin/novedades">Cancelar</a>
+    </div>
+  </form>
+}

@@ -1,0 +1,152 @@
+<header class="site-header" [class.scrolled]="scrolled()">
+  <div class="container-cdc nav-shell">
+    <a class="brand" routerLink="/" (click)="close()" aria-label="Ciudades del Conocimiento, ir al inicio">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7">
+          <circle cx="5" cy="6" r="2.1" />
+          <circle cx="19" cy="6" r="2.1" />
+          <circle cx="12" cy="18" r="2.1" />
+          <path d="M7 7.2 10.6 16M17 7.2 13.4 16M7.1 6h9.8" />
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-title">Ciudades del Conocimiento</span>
+        <span class="brand-sub">Municipalidad de L.G.S.M. · Jujuy</span>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Navegación principal">
+      <div class="nav-item">
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+      </div>
+
+      <div class="nav-item" [class.open]="dropdown() === 'programa'">
+        <button
+          class="nav-link"
+          type="button"
+          [attr.aria-expanded]="dropdown() === 'programa'"
+          aria-haspopup="true"
+          (click)="toggleDropdown('programa', $event)"
+        >
+          El programa
+          <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="m2.5 4.5 3.5 3 3.5-3" />
+          </svg>
+        </button>
+        @if (dropdown() === 'programa') {
+          <div class="dropdown-panel" (click)="$event.stopPropagation()">
+            <a class="dropdown-link" routerLink="/programa" (click)="close()">
+              <strong>Qué es</strong>
+              <span>La estrategia y su propósito</span>
+            </a>
+            <a class="dropdown-link" routerLink="/programa" fragment="pilares" (click)="close()">
+              <strong>Pilares</strong>
+              <span>Educación, innovación, economía y articulación</span>
+            </a>
+            <a class="dropdown-link" routerLink="/programa" fragment="marco-normativo" (click)="close()">
+              <strong>Marco normativo</strong>
+              <span>Ley 27.506, 27.570 y 6.130</span>
+            </a>
+            <a class="dropdown-link" routerLink="/programa" fragment="equipo" (click)="close()">
+              <strong>Quiénes lo llevan adelante</strong>
+              <span>Roles y equipos de trabajo</span>
+            </a>
+          </div>
+        }
+      </div>
+
+      <div class="nav-item" [class.open]="dropdown() === 'mesa'">
+        <button
+          class="nav-link"
+          type="button"
+          [attr.aria-expanded]="dropdown() === 'mesa'"
+          aria-haspopup="true"
+          (click)="toggleDropdown('mesa', $event)"
+        >
+          Mesa de Enlace
+          <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="m2.5 4.5 3.5 3 3.5-3" />
+          </svg>
+        </button>
+        @if (dropdown() === 'mesa') {
+          <div class="dropdown-panel" (click)="$event.stopPropagation()">
+            <a class="dropdown-link" routerLink="/mesa-de-enlace" (click)="close()">
+              <strong>Qué es</strong>
+              <span>El espacio de participación</span>
+            </a>
+            <a class="dropdown-link" routerLink="/instituciones" (click)="close()">
+              <strong>Instituciones y actores</strong>
+              <span>Quiénes construyen la ciudad</span>
+            </a>
+            <a class="dropdown-link" routerLink="/mesa-de-enlace" fragment="como-participar" (click)="close()">
+              <strong>Cómo participar</strong>
+              <span>Pasos para sumarte</span>
+            </a>
+            <a class="dropdown-link" routerLink="/mesa-de-enlace" fragment="que-ofrece" (click)="close()">
+              <strong>Qué ofrece</strong>
+              <span>Formación, articulación y visibilidad</span>
+            </a>
+          </div>
+        }
+      </div>
+
+      <div class="nav-item">
+        <a class="nav-link" routerLink="/novedades" routerLinkActive="active">Novedades</a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" routerLink="/agenda" routerLinkActive="active">Agenda</a>
+      </div>
+      <div class="nav-item">
+        <a class="nav-link" routerLink="/contacto" routerLinkActive="active">Contacto</a>
+      </div>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="btn-cdc btn-cdc-sm d-none d-lg-inline-flex" routerLink="/contacto" [queryParams]="{ motivo: 'mesa-de-enlace' }">
+        Sumate
+      </a>
+      <button
+        class="mobile-toggle"
+        type="button"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="mobile-menu"
+        aria-label="Abrir menú"
+        (click)="toggleMenu($event)"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          @if (menuOpen()) {
+            <path d="M6 6l12 12M18 6 6 18" />
+          } @else {
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          }
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" [class.open]="menuOpen()">
+    <div class="container-cdc">
+      <a class="mobile-link" routerLink="/" (click)="close()">Inicio</a>
+      <div class="mobile-group">
+        <div class="mobile-group-title">El programa</div>
+        <a class="mobile-link" routerLink="/programa" (click)="close()">Qué es</a>
+        <a class="mobile-link" routerLink="/programa" fragment="pilares" (click)="close()">Pilares</a>
+        <a class="mobile-link" routerLink="/programa" fragment="marco-normativo" (click)="close()">Marco normativo</a>
+        <a class="mobile-link" routerLink="/programa" fragment="equipo" (click)="close()">Quiénes lo llevan adelante</a>
+      </div>
+      <div class="mobile-group">
+        <div class="mobile-group-title">Mesa de Enlace</div>
+        <a class="mobile-link" routerLink="/mesa-de-enlace" (click)="close()">Qué es</a>
+        <a class="mobile-link" routerLink="/instituciones" (click)="close()">Instituciones y actores</a>
+        <a class="mobile-link" routerLink="/mesa-de-enlace" fragment="como-participar" (click)="close()">Cómo participar</a>
+        <a class="mobile-link" routerLink="/mesa-de-enlace" fragment="que-ofrece" (click)="close()">Qué ofrece</a>
+      </div>
+      <a class="mobile-link" routerLink="/novedades" (click)="close()">Novedades</a>
+      <a class="mobile-link" routerLink="/agenda" (click)="close()">Agenda</a>
+      <a class="mobile-link" routerLink="/contacto" (click)="close()">Contacto</a>
+      <a class="btn-cdc w-100 mt-2" routerLink="/contacto" [queryParams]="{ motivo: 'mesa-de-enlace' }" (click)="close()">
+        Sumate a la Mesa
+      </a>
+    </div>
+  </div>
+</header>

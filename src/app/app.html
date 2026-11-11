@@ -1,0 +1,13 @@
+<a class="skip-link" href="#contenido">Ir al contenido</a>
+
+@if (!isAdmin()) {
+  <app-header />
+}
+
+<main id="contenido">
+  <router-outlet />
+</main>
+
+@if (!isAdmin()) {
+  <app-footer />
+}

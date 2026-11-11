@@ -1,0 +1,132 @@
+<section class="page-hero">
+  <div class="container-cdc">
+    <div class="breadcrumb-cdc">
+      <a routerLink="/">Inicio</a>
+      <span>/</span>
+      <span>Contacto</span>
+    </div>
+    <div class="eyebrow">Hablemos</div>
+    <h1>Contacto</h1>
+    <p>
+      ¿Tenés una propuesta, una consulta o querés sumarte a la Mesa de Enlace?
+      Escribinos y te respondemos a la brevedad.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-cdc">
+    <div class="split">
+      <div class="card-cdc" style="padding: 28px">
+        <h2 style="font-size: 1.35rem; margin-bottom: 6px">Escribinos</h2>
+        <p class="muted" style="font-size: 0.88rem; margin-bottom: 20px">
+          Los campos marcados con * son obligatorios.
+        </p>
+
+        @if (sent()) {
+          <div class="alert-cdc alert-success" role="status">
+            Recibimos tu mensaje. Gracias por escribirnos.
+          </div>
+        }
+        @if (error()) {
+          <div class="alert-cdc alert-error" role="alert">
+            No pudimos enviar el mensaje. Probá de nuevo en unos segundos.
+          </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label class="form-label" for="name">Nombre y apellido *</label>
+              <input id="name" class="form-control-cdc" type="text" formControlName="name" autocomplete="name" />
+              @if (form.controls.name.touched && form.controls.name.invalid) {
+                <span class="form-error">Ingresá tu nombre.</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="email">Correo electrónico *</label>
+              <input id="email" class="form-control-cdc" type="email" formControlName="email" autocomplete="email" />
+              @if (form.controls.email.touched && form.controls.email.invalid) {
+                <span class="form-error">Ingresá un correo válido.</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="organization">Organización o institución</label>
+              <input id="organization" class="form-control-cdc" type="text" formControlName="organization" autocomplete="organization" />
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="sector">Sector</label>
+              <select id="sector" class="form-select-cdc" formControlName="sector">
+                <option value="GOBIERNO">Gobierno municipal</option>
+                <option value="EDUCACION">Educación</option>
+                <option value="SECTOR_PRIVADO">Sector privado</option>
+                <option value="COMUNIDAD">Comunidad</option>
+                <option value="OTRO">Otro / particular</option>
+              </select>
+            </div>
+
+            <div class="form-field full">
+              <label class="form-label" for="message">Mensaje *</label>
+              <textarea
+                id="message"
+                class="form-textarea-cdc"
+                formControlName="message"
+                placeholder="Contanos qué te interesa, qué querés proponer o qué consulta tenés."
+              ></textarea>
+              @if (form.controls.message.touched && form.controls.message.invalid) {
+                <span class="form-error">El mensaje debe tener al menos 20 caracteres.</span>
+              }
+            </div>
+
+            <div class="form-field full">
+              <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.84rem; color: var(--muted)">
+                <input type="checkbox" formControlName="consent" style="margin-top: 4px" />
+                <span>
+                  Autorizo el uso de mis datos para responder esta consulta y
+                  coordinar mi participación en el programa. *
+                </span>
+              </label>
+              @if (form.controls.consent.touched && form.controls.consent.invalid) {
+                <span class="form-error">Necesitamos tu consentimiento para responderte.</span>
+              }
+            </div>
+          </div>
+
+          <button class="btn-cdc mt-3" type="submit" [disabled]="sending()">
+            {{ sending() ? 'Enviando...' : 'Enviar mensaje' }}
+          </button>
+        </form>
+      </div>
+
+      <aside>
+        <div class="card-cdc" style="padding: 26px">
+          <div class="eyebrow">Municipalidad</div>
+          <h3 style="font-size: 1.05rem; margin-bottom: 8px">
+            Libertador General San Martín
+          </h3>
+          <p class="muted" style="font-size: 0.88rem">
+            Jujuy, Argentina. El programa Ciudades del Conocimiento articula al
+            municipio, las instituciones educativas, el sector privado y la
+            comunidad.
+          </p>
+          <div class="mt-3">
+            <a class="btn-cdc-outline w-100" routerLink="/mesa-de-enlace">Conocer la Mesa de Enlace</a>
+            <a class="btn-cdc-outline w-100 mt-1" routerLink="/instituciones">Ver instituciones</a>
+          </div>
+        </div>
+
+        <div class="card-cdc mt-2" style="padding: 26px">
+          <div class="eyebrow">Próximo encuentro</div>
+          <p class="muted" style="font-size: 0.88rem">
+            Consultá la agenda para conocer las próximas actividades y
+            convocatorias.
+          </p>
+          <a class="btn-link-cdc mt-2" routerLink="/agenda">Ver agenda →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

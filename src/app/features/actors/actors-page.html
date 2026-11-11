@@ -1,0 +1,143 @@
+<section class="page-hero">
+  <div class="container-cdc">
+    <div class="breadcrumb-cdc">
+      <a routerLink="/">Inicio</a>
+      <span>/</span>
+      <span>Instituciones y actores</span>
+    </div>
+    <div class="eyebrow">Mesa de Enlace</div>
+    <h1>Instituciones y actores</h1>
+    <p>
+      Instituciones educativas, empresas, organizaciones y áreas municipales que
+      participan de la Mesa de Enlace. El directorio se publica con autorización
+      de cada institución.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Los cuatro sectores</div>
+      <h2 class="section-title">Una red de trabajo conjunto</h2>
+      <p class="section-subtitle">
+        El programa convoca a todos los sectores de la ciudad. Estas son las
+        puertas de entrada para participar.
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+      <article class="pillar-card">
+        <div class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6" /></svg>
+        </div>
+        <h3>Gobierno municipal</h3>
+        <p>Coordina, convoca y acompaña el programa.</p>
+      </article>
+      <article class="pillar-card">
+        <div class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m3 9 9-5 9 5-9 5-9-5Z" /><path d="M7 11v5c0 1.7 2.2 3 5 3s5-1.3 5-3v-5" /></svg>
+        </div>
+        <h3>Educación</h3>
+        <p>Escuelas, universidades y espacios de formación.</p>
+      </article>
+      <article class="pillar-card">
+        <div class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>
+        </div>
+        <h3>Sector privado</h3>
+        <p>Empresas, PyMEs y emprendedores de la ciudad.</p>
+      </article>
+      <article class="pillar-card">
+        <div class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3" /><circle cx="17" cy="10" r="2.4" /><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5M14 20c0-2 1.4-3.4 3.5-3.4S21 18 21 20" /></svg>
+        </div>
+        <h3>Comunidad</h3>
+        <p>Organizaciones, clubes y centros vecinales.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tinted">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Directorio</div>
+      <h2 class="section-title">Quiénes ya participan</h2>
+      <p class="section-subtitle">
+        Solo se publican las instituciones que autorizaron figurar en el
+        directorio.
+      </p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filtrar por sector">
+      <button
+        type="button"
+        class="filter-chip"
+        [class.active]="sector() === 'TODOS'"
+        (click)="selectSector('TODOS')"
+      >
+        Todos
+      </button>
+      @for (item of sectors; track item.value) {
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="sector() === item.value"
+          (click)="selectSector(item.value)"
+        >
+          {{ item.label }}
+        </button>
+      }
+    </div>
+
+    @if (loading()) {
+      <div class="actor-grid">
+        @for (item of [1, 2, 3]; track item) {
+          <div class="skeleton" style="height: 190px"></div>
+        }
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <h3>No pudimos cargar el directorio</h3>
+        <p>Probá de nuevo en unos segundos.</p>
+        <a class="btn-cdc-outline" routerLink="/contacto">Escribinos</a>
+      </div>
+    } @else if (filtered().length === 0) {
+      <div class="empty-state">
+        <h3>Todavía no hay instituciones publicadas en este sector</h3>
+        <p>Si tu institución quiere sumarse, escribinos y coordinamos una reunión.</p>
+        <a class="btn-cdc" routerLink="/contacto" [queryParams]="{ motivo: 'mesa-de-enlace' }">
+          Quiero sumarme
+        </a>
+      </div>
+    } @else {
+      <div class="actor-grid">
+        @for (actor of filtered(); track actor.id) {
+          <app-actor-card [actor]="actor" />
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-cdc">
+    <div class="cta-band">
+      <div>
+        <h2>¿Tu institución quiere ser parte?</h2>
+        <p>
+          Escribinos con tus datos y el sector al que pertenecés. Nos ponemos en
+          contacto para coordinar la participación y, si corresponde, publicar el
+          logo en el directorio.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn-cdc-light" routerLink="/contacto" [queryParams]="{ motivo: 'mesa-de-enlace' }">
+          Quiero sumarme
+        </a>
+        <a class="btn-cdc-ghost" routerLink="/mesa-de-enlace">Conocer la Mesa</a>
+      </div>
+    </div>
+  </div>
+</section>

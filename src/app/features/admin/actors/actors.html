@@ -1,0 +1,174 @@
+<div class="admin-topbar">
+  <div>
+    <h1>Instituciones</h1>
+    <p>Directorio de actores de la Mesa de Enlace. Publicá solo con consentimiento.</p>
+  </div>
+  <div class="admin-actions">
+    <button type="button" class="btn-cdc btn-cdc-sm" (click)="newActor()">Nueva institución</button>
+  </div>
+</div>
+
+@if (message()) {
+  <div class="alert-cdc alert-success" role="status">{{ message() }}</div>
+}
+
+@if (showForm()) {
+  <div class="admin-card">
+    <div class="admin-card-head">
+      <h2>{{ editingId() ? 'Editar institución' : 'Nueva institución' }}</h2>
+      <button type="button" class="btn-link-cdc" (click)="cancel()">Cancelar</button>
+    </div>
+
+    @if (error()) {
+      <div class="alert-cdc alert-error" role="alert">{{ error() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label" for="actorName">Nombre *</label>
+          <input id="actorName" class="form-control-cdc" type="text" formControlName="name" />
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+            <span class="form-error">Ingresá el nombre de la institución.</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="actorSector">Sector *</label>
+          <select id="actorSector" class="form-select-cdc" formControlName="sector">
+            @for (sector of sectors; track sector[0]) {
+              <option [value]="sector[0]">{{ sector[1] }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-field full">
+          <label class="form-label" for="actorDescription">Descripción *</label>
+          <textarea id="actorDescription" class="form-textarea-cdc" formControlName="description"></textarea>
+          @if (form.controls.description.touched && form.controls.description.invalid) {
+            <span class="form-error">La descripción debe tener al menos 20 caracteres.</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="actorWebsite">Sitio web</label>
+          <input id="actorWebsite" class="form-control-cdc" type="url" formControlName="websiteUrl" placeholder="https://" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="actorEmail">Correo de contacto (privado)</label>
+          <input id="actorEmail" class="form-control-cdc" type="email" formControlName="contactEmail" />
+          <span class="form-hint">No se publica en el sitio.</span>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Logo</label>
+          <input class="form-control-cdc" type="file" accept="image/jpeg,image/png,image/webp,image/avif" (change)="onLogoSelected($event)" [disabled]="uploading()" />
+          @if (uploading()) {
+            <span class="form-hint">Subiendo...</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Vista previa</label>
+          @if (logoUrl(); as url) {
+            <img [src]="url" alt="Logo de la institución" style="width: 80px; height: 80px; object-fit: contain; border: 1px solid var(--line); border-radius: 12px; background: white; padding: 6px" />
+          } @else {
+            <span class="form-hint">Sin logo: se usan las iniciales.</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="actorOrder">Orden</label>
+          <input id="actorOrder" class="form-control-cdc" type="number" formControlName="order" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Consentimiento</label>
+          <label style="display: flex; gap: 8px; align-items: flex-start; font-size: 0.82rem; color: var(--muted)">
+            <input type="checkbox" formControlName="consent" style="margin-top: 4px" />
+            La institución autoriza figurar en el directorio y el uso de su logo.
+          </label>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="actorConsentNote">Referencia del consentimiento</label>
+          <input id="actorConsentNote" class="form-control-cdc" type="text" formControlName="consentNote" placeholder="Mail, acta o fecha" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Publicación</label>
+          <label style="display: flex; gap: 8px; align-items: center; font-size: 0.86rem; color: var(--muted); padding-top: 8px">
+            <input type="checkbox" formControlName="published" />
+            Publicar en el sitio
+          </label>
+        </div>
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn-cdc" type="submit" [disabled]="saving() || uploading()">
+          {{ saving() ? 'Guardando...' : 'Guardar institución' }}
+        </button>
+        <button type="button" class="btn-cdc-outline" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+} @else {
+  <div class="admin-card">
+    @if (loading()) {
+      <div class="skeleton" style="height: 240px"></div>
+    } @else if (actors().length === 0) {
+      <div class="empty-state">
+        <h3>Todavía no hay instituciones</h3>
+        <p>Cargá la primera institución y registrá su consentimiento.</p>
+        <button type="button" class="btn-cdc" (click)="newActor()">Nueva institución</button>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table-cdc">
+          <thead>
+            <tr>
+              <th>Institución</th>
+              <th>Sector</th>
+              <th>Consentimiento</th>
+              <th>Publicada</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (actor of actors(); track actor.id) {
+              <tr>
+                <td>
+                  <strong>{{ actor.name }}</strong>
+                  @if (actor.websiteUrl) {
+                    <div class="small muted">{{ actor.websiteUrl }}</div>
+                  }
+                </td>
+                <td>{{ actor.sector }}</td>
+                <td>
+                  <span [class]="'badge-status ' + (actor.consent ? 'badge-yes' : 'badge-no')">
+                    {{ actor.consent ? 'Sí' : 'No' }}
+                  </span>
+                </td>
+                <td>
+                  <span [class]="'badge-status ' + (actor.published ? 'badge-published' : 'badge-draft')">
+                    {{ actor.published ? 'Publicada' : 'Oculta' }}
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex gap-1 flex-wrap">
+                    <button type="button" class="btn-link-cdc" (click)="edit(actor)">Editar</button>
+                    <button type="button" class="btn-link-cdc" (click)="togglePublish(actor)">
+                      {{ actor.published ? 'Despublicar' : 'Publicar' }}
+                    </button>
+                    <button type="button" class="btn-link-cdc" style="color: #b91c1c" (click)="remove(actor)">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+}

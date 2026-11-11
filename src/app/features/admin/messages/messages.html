@@ -1,0 +1,53 @@
+<div class="admin-topbar">
+  <div>
+    <h1>Mensajes</h1>
+    <p>Consultas recibidas desde el formulario de contacto.</p>
+  </div>
+  <div class="admin-actions">
+    <button type="button" class="btn-cdc-outline btn-cdc-sm" (click)="load()">Actualizar</button>
+  </div>
+</div>
+
+@if (message()) {
+  <div class="alert-cdc alert-error" role="alert">{{ message() }}</div>
+}
+
+<div class="admin-card">
+  @if (loading()) {
+    <div class="skeleton" style="height: 220px"></div>
+  } @else if (messages().length === 0) {
+    <div class="empty-state">
+      <h3>No hay mensajes todavía</h3>
+      <p>Las consultas del formulario de contacto van a aparecer acá.</p>
+    </div>
+  } @else {
+    <div class="info-list">
+      @for (item of messages(); track item.id) {
+        <article class="law-box" [style.border-left-color]="item.read ? 'var(--line)' : 'var(--cyan-400)'">
+          <div class="d-flex justify-between flex-wrap gap-1 align-center">
+            <div>
+              <h3 style="margin-bottom: 2px">{{ item.name }}</h3>
+              <p class="small muted">
+                {{ item.email }}
+                @if (item.organization) {
+                  · {{ item.organization }}
+                }
+                · {{ sectorLabel(item.sector) }}
+              </p>
+            </div>
+            <span [class]="'badge-status ' + (item.read ? 'badge-no' : 'badge-yes')">
+              {{ item.read ? 'Leído' : 'Nuevo' }}
+            </span>
+          </div>
+          <p class="mt-2" style="white-space: pre-line">{{ item.message }}</p>
+          <div class="d-flex justify-between flex-wrap gap-1 align-center mt-2">
+            <span class="small muted">{{ formatDate(item.createdAt) }} · {{ formatTime(item.createdAt) }} hs</span>
+            @if (!item.read) {
+              <button type="button" class="btn-link-cdc" (click)="markRead(item)">Marcar como leído</button>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</div>

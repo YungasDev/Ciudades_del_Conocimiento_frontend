@@ -1,0 +1,120 @@
+<section class="page-hero">
+  <div class="container-cdc">
+    <div class="breadcrumb-cdc">
+      <a routerLink="/">Inicio</a>
+      <span>/</span>
+      <span>Novedades</span>
+    </div>
+    <div class="eyebrow">Actualidad</div>
+    <h1>Novedades</h1>
+    <p>
+      Lo que está pasando en la ciudad del conocimiento: encuentros, avances del
+      programa, formación y experiencias de la Mesa de Enlace.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-cdc">
+    <div class="filters">
+      <button
+        type="button"
+        class="filter-chip"
+        [class.active]="category() === ''"
+        (click)="selectCategory('')"
+      >
+        Todas
+      </button>
+      @for (item of categories(); track item.slug) {
+        <button
+          type="button"
+          class="filter-chip"
+          [class.active]="category() === item.slug"
+          (click)="selectCategory(item.slug)"
+        >
+          {{ item.name }}
+        </button>
+      }
+
+      <form class="search-box" (submit)="submitSearch($event)" role="search">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m16 16 5 5" />
+        </svg>
+        <input
+          type="search"
+          placeholder="Buscar por título o palabra clave"
+          [value]="searchTerm()"
+          (input)="onSearchInput($any($event.target).value)"
+          aria-label="Buscar novedades"
+        />
+      </form>
+    </div>
+
+    @if (loading()) {
+      <div class="news-grid">
+        @for (item of [1, 2, 3, 4, 5, 6]; track item) {
+          <div class="news-card">
+            <div class="skeleton" style="aspect-ratio: 16/9"></div>
+            <div class="news-body">
+              <div class="skeleton" style="height: 18px; width: 40%"></div>
+              <div class="skeleton" style="height: 24px; width: 90%"></div>
+              <div class="skeleton" style="height: 14px; width: 100%"></div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <h3>No pudimos cargar las novedades</h3>
+        <p>Revisá tu conexión o probá de nuevo en unos segundos.</p>
+        <button type="button" class="btn-cdc-outline" (click)="clearFilters()">Reintentar</button>
+      </div>
+    } @else if (posts().length === 0) {
+      <div class="empty-state">
+        <h3>No encontramos novedades con esos filtros</h3>
+        <p>Probá con otra búsqueda o mirá todas las novedades.</p>
+        <button type="button" class="btn-cdc" (click)="clearFilters()">Ver todas</button>
+      </div>
+    } @else {
+      <div class="news-grid">
+        @for (post of posts(); track post.id) {
+          <app-news-card [post]="post" />
+        }
+      </div>
+
+      @if (totalPages() > 1) {
+        <nav class="pagination-cdc" aria-label="Paginación de novedades">
+          <button
+            type="button"
+            class="page-btn"
+            [disabled]="page() === 1"
+            (click)="goToPage(page() - 1)"
+            aria-label="Página anterior"
+          >
+            ←
+          </button>
+          @for (p of pages(); track p) {
+            <button
+              type="button"
+              class="page-btn"
+              [class.active]="page() === p"
+              (click)="goToPage(p)"
+            >
+              {{ p }}
+            </button>
+          }
+          <button
+            type="button"
+            class="page-btn"
+            [disabled]="page() === totalPages()"
+            (click)="goToPage(page() + 1)"
+            aria-label="Página siguiente"
+          >
+            →
+          </button>
+        </nav>
+      }
+    }
+  </div>
+</section>

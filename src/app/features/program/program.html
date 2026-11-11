@@ -1,0 +1,345 @@
+<section class="page-hero">
+  <div class="container-cdc">
+    <div class="breadcrumb-cdc">
+      <a routerLink="/">Inicio</a>
+      <span>/</span>
+      <span>El programa</span>
+    </div>
+    <div class="eyebrow">El programa</div>
+    <h1>Una estrategia para transformar el talento en oportunidades</h1>
+    <p>
+      Ciudades del Conocimiento articula educación, innovación, desarrollo
+      económico y trabajo conjunto para ampliar las oportunidades de quienes
+      viven en Libertador General San Martín.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-cdc">
+    <div class="split">
+      <div>
+        <div class="eyebrow">Qué es</div>
+        <h2 class="section-title">El conocimiento como motor del desarrollo local</h2>
+        <p class="lead mt-2">
+          Una ciudad del conocimiento utiliza el conocimiento para mejorar su
+          desarrollo económico y social. Conecta instituciones educativas,
+          empresas, gobierno y comunidad.
+        </p>
+        <p class="muted mt-2">
+          No se limita al software ni requiere ser una gran capital. Se trata de
+          reconocer los saberes que ya existen en la ciudad y ponerlos al
+          servicio de proyectos concretos: formación, empleo, innovación y
+          mejores servicios públicos.
+        </p>
+        <p class="muted mt-2">
+          El programa se enmarca en el enfoque de la Red de Innovación Local
+          (RIL) y propone una agenda compartida entre el municipio, las
+          instituciones educativas, el sector productivo y las organizaciones de
+          la comunidad.
+        </p>
+      </div>
+
+      <div class="card-cdc" style="padding: 26px">
+        <div class="eyebrow">Qué queremos lograr</div>
+        <h3 style="font-size: 1.25rem; margin-bottom: 10px">
+          Una ciudad más innovadora, conectada y con más oportunidades
+        </h3>
+        <p class="muted">
+          A través del conocimiento, la tecnología y el trabajo conjunto entre el
+          municipio, las instituciones, las empresas y la comunidad.
+        </p>
+        <div class="info-list mt-3">
+          <div class="info-item">
+            <div class="info-number">1</div>
+            <div>
+              <h3>Más oportunidades</h3>
+              <p>Formación y trabajo para las personas.</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-number">2</div>
+            <div>
+              <h3>Economía local más fuerte</h3>
+              <p>Más productividad y empleo calificado.</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-number">3</div>
+            <div>
+              <h3>Mejores servicios públicos</h3>
+              <p>Información y herramientas para resolver problemas concretos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tinted">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Misión, visión y valores</div>
+      <h2 class="section-title">El horizonte que nos guía</h2>
+    </div>
+
+    <div class="split">
+      <div class="card-cdc" style="padding: 28px">
+        <h3 style="font-size: 1.05rem; margin-bottom: 8px">Misión</h3>
+        <p class="muted">
+          Promover el desarrollo de Libertador General San Martín mediante la
+          educación, el conocimiento y la innovación, articulando al municipio,
+          las instituciones educativas, el sector productivo y la comunidad para
+          ampliar las oportunidades de formación y trabajo, fortalecer la
+          economía local y mejorar la calidad de vida.
+        </p>
+      </div>
+      <div class="card-cdc" style="padding: 28px">
+        <h3 style="font-size: 1.05rem; margin-bottom: 8px">Visión</h3>
+        <p class="muted">
+          Ser una ciudad que ofrezca oportunidades para aprender, emprender y
+          desarrollar proyectos de vida, reconocida por transformar su talento y
+          su identidad industrial, agroindustrial y cultural en un desarrollo
+          diversificado, inclusivo y sostenible.
+        </p>
+        <p class="small muted mt-2">Horizonte 2035, con una primera etapa en 2027.</p>
+      </div>
+    </div>
+
+    <div class="values-grid mt-3">
+      @for (value of values; track value[0]) {
+        <div class="value-card">
+          <h3>{{ value[0] }}</h3>
+          <p>{{ value[1] }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Objetivos estratégicos</div>
+      <h2 class="section-title">Seis objetivos para avanzar</h2>
+    </div>
+    <div class="info-list">
+      @for (objective of objectives; track objective; let i = $index) {
+        <div class="info-item">
+          <div class="info-number">{{ i + 1 }}</div>
+          <div>
+            <h3>{{ objective }}</h3>
+            <p>
+              @switch (i) {
+                @case (0) { Establecer vínculos sostenidos entre el municipio, las instituciones educativas, las empresas y las organizaciones de la comunidad. }
+                @case (1) { Facilitar capacidades científicas, técnicas y digitales relacionadas con las necesidades locales. }
+                @case (2) { Favorecer experiencias de aprendizaje y vinculación laboral que permitan desarrollar proyectos de vida en la ciudad. }
+                @case (3) { Aplicar conocimiento a la industria, la agroindustria, el comercio y los servicios, acompañando nuevas actividades económicas. }
+                @case (4) { Incorporar información, capacidades y herramientas para resolver problemas concretos de la comunidad. }
+                @case (5) { Acordar responsabilidades, recursos e indicadores que permitan revisar resultados y dar continuidad a las acciones. }
+              }
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section section-tinted" id="pilares">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Pilares</div>
+      <h2 class="section-title">Cuatro ejes que se complementan</h2>
+      <p class="section-subtitle">
+        Una acción de formación puede abrir una oportunidad de empleo; un
+        proyecto de innovación puede mejorar un servicio; una articulación puede
+        destrabar una inversión.
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+      <article class="pillar-card">
+        <div class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="m3 9 9-5 9 5-9 5-9-5Z" />
+            <path d="M7 11v5c0 1.7 2.2 3 5 3s5-1.3 5-3v-5" />
+          </svg>
+        </div>
+        <h3>Educación y Talento</h3>
+        <p>
+          Formación y capacidades para las personas: trayectorias educativas,
+          capacitación técnica y habilidades digitales.
+        </p>
+      </article>
+      <article class="pillar-card">
+        <div class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M9 18h6M10 21h4" />
+            <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9V16h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3Z" />
+          </svg>
+        </div>
+        <h3>Innovación y Tecnología</h3>
+        <p>
+          Soluciones y conocimiento aplicado. Busca que las ideas se transformen
+          en proyectos, productos o mejoras concretas.
+        </p>
+      </article>
+      <article class="pillar-card">
+        <div class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+          </svg>
+        </div>
+        <h3>Desarrollo Económico</h3>
+        <p>
+          Empleo y productividad. Fortalece las actividades existentes y abre
+          nuevas oportunidades en la economía del conocimiento.
+        </p>
+      </article>
+      <article class="pillar-card">
+        <div class="pillar-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <circle cx="6" cy="7" r="2.5" />
+            <circle cx="18" cy="7" r="2.5" />
+            <circle cx="12" cy="18" r="2.5" />
+            <path d="M8.2 8.4 10.8 16M15.8 8.4 13.2 16M8.5 7h7" />
+          </svg>
+        </div>
+        <h3>Articulación</h3>
+        <p>
+          Estado, empresas y academia trabajando juntos. La Mesa de Enlace es el
+          espacio para coordinar y hacer seguimiento.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Cómo se construye</div>
+      <h2 class="section-title">Un proceso, no un reconocimiento aislado</h2>
+    </div>
+    <div class="steps">
+      @for (step of steps; track step[0]) {
+        <div class="step">
+          <h3>{{ step[0] }}</h3>
+          <p>{{ step[1] }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section section-tinted" id="marco-normativo">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Marco normativo</div>
+      <h2 class="section-title">Las normas que dan marco al programa</h2>
+    </div>
+
+    <div class="split">
+      <div>
+        <div class="law-box">
+          <h3>Ley Nacional 27.506</h3>
+          <p>
+            Régimen de Promoción de la Economía del Conocimiento, modificado por
+            la Ley 27.570. Incluye software y servicios informáticos, producción
+            audiovisual, biotecnología, nanotecnología, servicios geológicos y de
+            prospección, servicios profesionales exportables, Industria 4.0 y
+            otras actividades.
+          </p>
+        </div>
+        <div class="law-box">
+          <h3>Ley Provincial 6.130</h3>
+          <p>
+            Adhesión de la provincia de Jujuy al régimen nacional. Los incentivos
+            provinciales están sujetos a condiciones y vigencia.
+          </p>
+        </div>
+        <div class="law-box">
+          <h3>Red de Innovación Local (RIL)</h3>
+          <p>
+            Organización que impulsa capacidades y colaboración en gobiernos
+            locales. La metodología y los criterios de certificación deben
+            validarse con RIL.
+          </p>
+        </div>
+      </div>
+      <div class="card-cdc" style="padding: 26px">
+        <h3 style="font-size: 1.05rem; margin-bottom: 8px">Información general</h3>
+        <p class="muted">
+          La elegibilidad y los beneficios dependen de cada actividad y de los
+          requisitos vigentes. Esta información no constituye asesoramiento
+          impositivo.
+        </p>
+        <p class="small muted mt-2">
+          Antes de iniciar un trámite, consultá con un profesional y verificá la
+          normativa oficial.
+        </p>
+        <a class="btn-cdc-outline mt-3" routerLink="/contacto">Hacer una consulta</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="equipo">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Quiénes lo llevan adelante</div>
+      <h2 class="section-title">Un equipo de trabajo compartido</h2>
+      <p class="section-subtitle">
+        El programa se coordina desde el municipio con referentes de instituciones
+        educativas, del sector privado y de la comunidad. Los nombres y cargos se
+        publican solo con autorización.
+      </p>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>Coordinación general</h3>
+        <p>Articulación institucional, convocatoria y seguimiento del programa.</p>
+      </div>
+      <div class="value-card">
+        <h3>Instituciones educativas</h3>
+        <p>Vinculación con escuelas, universidades y espacios de formación.</p>
+      </div>
+      <div class="value-card">
+        <h3>Sector privado</h3>
+        <p>Contacto con empresas, PyMEs y emprendedores de la ciudad.</p>
+      </div>
+      <div class="value-card">
+        <h3>Comunidad</h3>
+        <p>Participación de organizaciones, clubes y centros vecinales.</p>
+      </div>
+      <div class="value-card">
+        <h3>Comunicación</h3>
+        <p>Difusión de novedades, encuentros y resultados del programa.</p>
+      </div>
+      <div class="value-card">
+        <h3>Equipo operativo</h3>
+        <p>Apoyo en datos, herramientas digitales y organización de actividades.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container-cdc">
+    <div class="cta-band">
+      <div>
+        <h2>El programa se construye con tu participación</h2>
+        <p>Sumate a la Mesa de Enlace o escribinos para conocer cómo colaborar.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn-cdc-light" routerLink="/contacto" [queryParams]="{ motivo: 'mesa-de-enlace' }">
+          Sumate a la Mesa
+        </a>
+        <a class="btn-cdc-ghost" routerLink="/instituciones">Ver instituciones</a>
+      </div>
+    </div>
+  </div>
+</section>

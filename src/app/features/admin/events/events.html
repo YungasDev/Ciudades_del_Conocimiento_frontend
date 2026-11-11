@@ -1,0 +1,129 @@
+<div class="admin-topbar">
+  <div>
+    <h1>Eventos</h1>
+    <p>Encuentros, talleres y actividades del programa.</p>
+  </div>
+  <div class="admin-actions">
+    <button type="button" class="btn-cdc btn-cdc-sm" (click)="newEvent()">Nuevo evento</button>
+  </div>
+</div>
+
+@if (message()) {
+  <div class="alert-cdc alert-success" role="status">{{ message() }}</div>
+}
+
+@if (showForm()) {
+  <div class="admin-card">
+    <div class="admin-card-head">
+      <h2>{{ editingId() ? 'Editar evento' : 'Nuevo evento' }}</h2>
+      <button type="button" class="btn-link-cdc" (click)="cancel()">Cancelar</button>
+    </div>
+
+    @if (error()) {
+      <div class="alert-cdc alert-error" role="alert">{{ error() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <div class="form-grid">
+        <div class="form-field full">
+          <label class="form-label" for="eventTitle">Título *</label>
+          <input id="eventTitle" class="form-control-cdc" type="text" formControlName="title" />
+          @if (form.controls.title.touched && form.controls.title.invalid) {
+            <span class="form-error">Ingresá un título de al menos 5 caracteres.</span>
+          }
+        </div>
+
+        <div class="form-field full">
+          <label class="form-label" for="eventDescription">Descripción *</label>
+          <textarea id="eventDescription" class="form-textarea-cdc" formControlName="description"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="eventStarts">Inicio *</label>
+          <input id="eventStarts" class="form-control-cdc" type="datetime-local" formControlName="startsAt" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="eventEnds">Fin</label>
+          <input id="eventEnds" class="form-control-cdc" type="datetime-local" formControlName="endsAt" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="eventPlace">Lugar *</label>
+          <input id="eventPlace" class="form-control-cdc" type="text" formControlName="place" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="eventCtaLabel">Texto del botón</label>
+          <input id="eventCtaLabel" class="form-control-cdc" type="text" formControlName="ctaLabel" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="eventCtaUrl">Enlace del botón</label>
+          <input id="eventCtaUrl" class="form-control-cdc" type="text" formControlName="ctaUrl" placeholder="/contacto?motivo=mesa-de-enlace" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Publicación</label>
+          <label style="display: flex; gap: 8px; align-items: center; font-size: 0.86rem; color: var(--muted); padding-top: 8px">
+            <input type="checkbox" formControlName="published" />
+            Publicar en la agenda
+          </label>
+        </div>
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn-cdc" type="submit" [disabled]="saving()">
+          {{ saving() ? 'Guardando...' : 'Guardar evento' }}
+        </button>
+        <button type="button" class="btn-cdc-outline" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+} @else {
+  <div class="admin-card">
+    @if (loading()) {
+      <div class="skeleton" style="height: 220px"></div>
+    } @else if (events().length === 0) {
+      <div class="empty-state">
+        <h3>No hay eventos</h3>
+        <p>Creá el primer encuentro para mostrarlo en la agenda.</p>
+        <button type="button" class="btn-cdc" (click)="newEvent()">Nuevo evento</button>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table-cdc">
+          <thead>
+            <tr>
+              <th>Evento</th>
+              <th>Fecha</th>
+              <th>Lugar</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (event of events(); track event.id) {
+              <tr>
+                <td><strong>{{ event.title }}</strong></td>
+                <td>{{ formatDate(event.startsAt) }} · {{ formatTime(event.startsAt) }} hs</td>
+                <td>{{ event.place }}</td>
+                <td>
+                  <span [class]="'badge-status ' + (event.published ? 'badge-published' : 'badge-draft')">
+                    {{ event.published ? 'Publicado' : 'Oculto' }}
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button type="button" class="btn-link-cdc" (click)="edit(event)">Editar</button>
+                    <button type="button" class="btn-link-cdc" style="color: #b91c1c" (click)="remove(event)">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+}

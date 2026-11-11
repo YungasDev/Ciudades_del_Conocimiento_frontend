@@ -1,0 +1,105 @@
+<div class="admin-topbar">
+  <div>
+    <h1>Dashboard</h1>
+    <p>Resumen del programa y de los contenidos publicados.</p>
+  </div>
+  <div class="admin-actions">
+    <a class="btn-cdc btn-cdc-sm" routerLink="/admin/novedades/nueva">Nueva novedad</a>
+    <a class="btn-cdc-outline btn-cdc-sm" routerLink="/admin/instituciones">Instituciones</a>
+  </div>
+</div>
+
+@if (stats(); as data) {
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span>Publicadas</span>
+      <strong>{{ data.published }}</strong>
+    </div>
+    <div class="stat-card">
+      <span>Borradores</span>
+      <strong>{{ data.drafts }}</strong>
+    </div>
+    <div class="stat-card">
+      <span>Instituciones publicadas</span>
+      <strong>{{ data.actorsPublished }}</strong>
+    </div>
+    <div class="stat-card">
+      <span>Próximos eventos</span>
+      <strong>{{ data.upcomingEvents }}</strong>
+    </div>
+    <div class="stat-card">
+      <span>Categorías</span>
+      <strong>{{ data.categories }}</strong>
+    </div>
+    <div class="stat-card">
+      <span>Mensajes sin leer</span>
+      <strong>{{ data.unreadMessages }}</strong>
+    </div>
+    <div class="stat-card">
+      <span>Total instituciones</span>
+      <strong>{{ data.actorsTotal }}</strong>
+    </div>
+    <div class="stat-card">
+      <span>Archivadas</span>
+      <strong>{{ data.archived }}</strong>
+    </div>
+  </div>
+}
+
+<div class="admin-card">
+  <div class="admin-card-head">
+    <h2>Últimas novedades</h2>
+    <a class="btn-link-cdc" routerLink="/admin/novedades">Ver todas →</a>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton" style="height: 180px"></div>
+  } @else if (posts().length === 0) {
+    <div class="empty-state">
+      <h3>Todavía no hay novedades</h3>
+      <p>Creá la primera nota para empezar a comunicar el programa.</p>
+      <a class="btn-cdc" routerLink="/admin/novedades/nueva">Nueva novedad</a>
+    </div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table-cdc">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (post of posts(); track post.id) {
+            <tr>
+              <td><strong>{{ post.title }}</strong></td>
+              <td>{{ post.category?.name ?? '—' }}</td>
+              <td>
+                <span [class]="'badge-status badge-' + post.status.toLowerCase()">
+                  {{ post.status === 'PUBLISHED' ? 'Publicada' : post.status === 'DRAFT' ? 'Borrador' : 'Archivada' }}
+                </span>
+              </td>
+              <td>{{ formatDate(post.publishedAt) }}</td>
+              <td><a class="btn-link-cdc" [routerLink]="['/admin/novedades', post.id]">Editar</a></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-head">
+    <h2>Accesos rápidos</h2>
+  </div>
+  <div class="d-flex gap-1 flex-wrap">
+    <a class="btn-cdc-outline btn-cdc-sm" routerLink="/admin/novedades/nueva">Nueva novedad</a>
+    <a class="btn-cdc-outline btn-cdc-sm" routerLink="/admin/instituciones">Nueva institución</a>
+    <a class="btn-cdc-outline btn-cdc-sm" routerLink="/admin/eventos">Nuevo evento</a>
+    <a class="btn-cdc-outline btn-cdc-sm" routerLink="/admin/categorias">Categorías</a>
+  </div>
+</div>

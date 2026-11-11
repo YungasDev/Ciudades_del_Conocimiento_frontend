@@ -1,0 +1,89 @@
+<section class="page-hero">
+  <div class="container-cdc">
+    <div class="breadcrumb-cdc">
+      <a routerLink="/">Inicio</a>
+      <span>/</span>
+      <span>Agenda</span>
+    </div>
+    <div class="eyebrow">Encuentros</div>
+    <h1>Agenda</h1>
+    <p>
+      Próximos encuentros de la Mesa de Enlace, talleres y actividades del
+      programa. La participación es abierta, con inscripción previa cuando se
+      indica.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-cdc">
+    <div class="section-head">
+      <div class="eyebrow">Próximos</div>
+      <h2 class="section-title">Qué viene</h2>
+    </div>
+
+    @if (loading()) {
+      <div class="info-list">
+        @for (item of [1, 2]; track item) {
+          <div class="skeleton" style="height: 120px"></div>
+        }
+      </div>
+    } @else if (error()) {
+      <div class="empty-state">
+        <h3>No pudimos cargar la agenda</h3>
+        <p>Probá de nuevo en unos segundos.</p>
+      </div>
+    } @else if (upcoming().length === 0) {
+      <div class="empty-state">
+        <h3>No hay encuentros programados por ahora</h3>
+        <p>Seguí las novedades o escribinos para conocer las próximas actividades.</p>
+        <a class="btn-cdc-outline" routerLink="/novedades">Ver novedades</a>
+      </div>
+    } @else {
+      <div class="info-list">
+        @for (event of upcoming(); track event.id) {
+          <article class="event-banner" style="margin-bottom: 14px">
+            <div class="event-date">
+              <strong>{{ monthDay(event.startsAt).day }}</strong>
+              <span>{{ monthDay(event.startsAt).month }}</span>
+            </div>
+            <div class="event-info">
+              <h3>{{ event.title }}</h3>
+              <p>
+                {{ formatDate(event.startsAt) }} · {{ formatTime(event.startsAt) }} hs ·
+                {{ event.place }}
+              </p>
+              <p class="mt-1">{{ event.description }}</p>
+            </div>
+            @if (event.ctaLabel && event.ctaUrl) {
+              <a class="btn-cdc-light" [routerLink]="event.ctaUrl">{{ event.ctaLabel }}</a>
+            }
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+@if (past().length > 0) {
+  <section class="section section-tinted">
+    <div class="container-cdc">
+      <div class="section-head">
+        <div class="eyebrow">Memoria de encuentros</div>
+        <h2 class="section-title">Lo que ya pasó</h2>
+      </div>
+      <div class="info-list">
+        @for (event of past(); track event.id) {
+          <div class="info-item">
+            <div class="info-number">{{ monthDay(event.startsAt).day }}</div>
+            <div>
+              <h3>{{ event.title }}</h3>
+              <p>{{ formatDate(event.startsAt) }} · {{ event.place }}</p>
+              <p class="mt-1">{{ event.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}

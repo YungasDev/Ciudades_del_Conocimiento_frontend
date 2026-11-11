@@ -1,0 +1,128 @@
+@if (loading()) {
+  <section class="section">
+    <div class="container-cdc">
+      <div class="skeleton mb-2" style="height: 28px; width: 220px"></div>
+      <div class="skeleton" style="height: 52px; width: 80%" class="mb-2"></div>
+      <div class="skeleton" style="height: 20px; width: 60%" class="mb-3"></div>
+      <div class="skeleton" style="height: 360px; width: 100%"></div>
+    </div>
+  </section>
+} @else if (notFound()) {
+  <section class="section">
+    <div class="container-cdc">
+      <div class="empty-state">
+        <h3>No encontramos esta novedad</h3>
+        <p>Puede que se haya movido o que todavía no esté publicada.</p>
+        <a class="btn-cdc" routerLink="/novedades">Ver todas las novedades</a>
+      </div>
+    </div>
+  </section>
+} @else if (post(); as article) {
+  <section class="section">
+    <div class="container-cdc">
+      <div class="breadcrumb-cdc" style="color: var(--muted)">
+        <a routerLink="/" style="color: var(--blue-600)">Inicio</a>
+        <span>/</span>
+        <a routerLink="/novedades" style="color: var(--blue-600)">Novedades</a>
+        @if (article.category; as category) {
+          <span>/</span>
+          <span>{{ category.name }}</span>
+        }
+      </div>
+
+      <div class="article-layout">
+        <article class="article-content">
+          <div class="article-meta">
+            @if (article.category; as category) {
+              <span class="chip">{{ category.name }}</span>
+            }
+            <span>{{ formatDate(article.publishedAt) }}</span>
+            <span>·</span>
+            <span>{{ article.author }}</span>
+          </div>
+
+          <h1 class="article-title">{{ article.title }}</h1>
+          <p class="article-excerpt">{{ article.excerpt }}</p>
+
+          @if (article.cover; as cover) {
+            <figure class="article-cover">
+              <img [src]="cover.url" [alt]="cover.alt" />
+            </figure>
+          }
+
+          <div class="article-body">
+            @for (paragraph of paragraphs(); track $index) {
+              @if (paragraph.startsWith('## ')) {
+                <h2>{{ paragraph.slice(3) }}</h2>
+              } @else if (paragraph.startsWith('### ')) {
+                <h3>{{ paragraph.slice(4) }}</h3>
+              } @else {
+                <p>{{ paragraph }}</p>
+              }
+            }
+          </div>
+
+          <div class="share-row">
+            <span class="small muted" style="align-self: center">Compartir:</span>
+            <button type="button" class="share-btn" (click)="shareWhatsApp()">WhatsApp</button>
+            <button type="button" class="share-btn" (click)="shareFacebook()">Facebook</button>
+            <button type="button" class="share-btn" (click)="copyLink()">
+              {{ copied() ? 'Enlace copiado' : 'Copiar enlace' }}
+            </button>
+          </div>
+
+          <div class="mt-3">
+            <a class="btn-cdc-outline" routerLink="/novedades">← Volver a novedades</a>
+          </div>
+        </article>
+
+        <aside>
+          <div class="sidebar-card">
+            <h3>Últimas novedades</h3>
+            @for (item of latest(); track item.id) {
+              <a class="sidebar-post" [routerLink]="['/novedades', item.slug]">
+                <strong>{{ item.title }}</strong>
+                <span>{{ formatDate(item.publishedAt) }}</span>
+              </a>
+            }
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Temas</h3>
+            <div class="filters" style="margin-bottom: 0">
+              @for (category of categories(); track category.slug) {
+                <a class="filter-chip" [routerLink]="['/novedades']" [queryParams]="{ categoria: category.slug }">
+                  {{ category.name }}
+                </a>
+              }
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Mesa de Enlace</h3>
+            <p class="small muted">
+              ¿Querés sumarte al programa o proponer un proyecto?
+            </p>
+            <a class="btn-cdc w-100 mt-2" routerLink="/contacto" [queryParams]="{ motivo: 'mesa-de-enlace' }">
+              Escribinos
+            </a>
+          </div>
+        </aside>
+      </div>
+
+      @if (article.related.length > 0) {
+        <div class="mt-4">
+          <div class="section-head">
+            <div class="eyebrow">Seguir leyendo</div>
+            <h2 class="section-title" style="font-size: 1.6rem">Novedades relacionadas</h2>
+          </div>
+          <div class="news-grid">
+            @for (related of article.related; track related.id) {
+              <app-news-card [post]="related" />
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+}

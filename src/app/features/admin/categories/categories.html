@@ -1,0 +1,103 @@
+<div class="admin-topbar">
+  <div>
+    <h1>Categorías</h1>
+    <p>Organizá las novedades por tema.</p>
+  </div>
+  <div class="admin-actions">
+    <button type="button" class="btn-cdc btn-cdc-sm" (click)="newCategory()">Nueva categoría</button>
+  </div>
+</div>
+
+@if (message()) {
+  <div class="alert-cdc alert-success" role="status">{{ message() }}</div>
+}
+
+@if (showForm()) {
+  <div class="admin-card">
+    <div class="admin-card-head">
+      <h2>{{ editingId() ? 'Editar categoría' : 'Nueva categoría' }}</h2>
+      <button type="button" class="btn-link-cdc" (click)="cancel()">Cancelar</button>
+    </div>
+
+    @if (error()) {
+      <div class="alert-cdc alert-error" role="alert">{{ error() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label" for="categoryName">Nombre *</label>
+          <input id="categoryName" class="form-control-cdc" type="text" formControlName="name" />
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+            <span class="form-error">Ingresá un nombre de al menos 3 caracteres.</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="categoryColor">Color</label>
+          <input id="categoryColor" class="form-control-cdc" type="color" formControlName="color" style="height: 44px" />
+        </div>
+
+        <div class="form-field full">
+          <label class="form-label" for="categoryDescription">Descripción</label>
+          <textarea id="categoryDescription" class="form-textarea-cdc" style="min-height: 80px" formControlName="description"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="categoryOrder">Orden</label>
+          <input id="categoryOrder" class="form-control-cdc" type="number" formControlName="order" />
+        </div>
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn-cdc" type="submit" [disabled]="saving()">
+          {{ saving() ? 'Guardando...' : 'Guardar categoría' }}
+        </button>
+        <button type="button" class="btn-cdc-outline" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+} @else {
+  <div class="admin-card">
+    @if (loading()) {
+      <div class="skeleton" style="height: 220px"></div>
+    } @else if (categories().length === 0) {
+      <div class="empty-state">
+        <h3>No hay categorías</h3>
+        <p>Creá la primera categoría para organizar las novedades.</p>
+        <button type="button" class="btn-cdc" (click)="newCategory()">Nueva categoría</button>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table-cdc">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Slug</th>
+              <th>Orden</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (category of categories(); track category.id) {
+              <tr>
+                <td>
+                  <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px" [style.background]="category.color ?? '#1B6FD1'"></span>
+                  <strong>{{ category.name }}</strong>
+                </td>
+                <td class="small muted">{{ category.slug }}</td>
+                <td>{{ category.order }}</td>
+                <td>
+                  <div class="d-flex gap-1">
+                    <button type="button" class="btn-link-cdc" (click)="edit(category)">Editar</button>
+                    <button type="button" class="btn-link-cdc" style="color: #b91c1c" (click)="remove(category)">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+}

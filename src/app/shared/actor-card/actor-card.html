@@ -1,0 +1,24 @@
+<article class="actor-card">
+  <div class="actor-head">
+    <div class="actor-logo">
+      @if (actor().logo; as logo) {
+        <img [src]="logo.url" [alt]="logo.alt" loading="lazy" />
+      } @else {
+        {{ initials() }}
+      }
+    </div>
+    <div>
+      <span class="actor-sector">{{ sectorLabel() }}</span>
+      <h3>{{ actor().name }}</h3>
+    </div>
+  </div>
+  <p>{{ actor().description }}</p>
+  @if (actor().websiteUrl; as url) {
+    <a class="actor-link" [href]="url" target="_blank" rel="noopener noreferrer">
+      Visitar sitio
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </svg>
+    </a>
+  }
+</article>

@@ -1,0 +1,73 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <a class="admin-brand" routerLink="/admin">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7">
+          <circle cx="5" cy="6" r="2.1" />
+          <circle cx="19" cy="6" r="2.1" />
+          <circle cx="12" cy="18" r="2.1" />
+          <path d="M7 7.2 10.6 16M17 7.2 13.4 16M7.1 6h9.8" />
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-title">Ciudades del Conocimiento</span>
+        <span class="brand-sub">Panel de gestión</span>
+      </span>
+    </a>
+
+    <nav class="admin-nav" aria-label="Navegación del panel">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" />
+        </svg>
+        Dashboard
+      </a>
+      <a routerLink="/admin/novedades" routerLinkActive="active">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M4 5h16v14H4z" /><path d="M8 9h8M8 13h8M8 17h5" />
+        </svg>
+        Novedades
+      </a>
+      <a routerLink="/admin/instituciones" routerLinkActive="active">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6" />
+        </svg>
+        Instituciones
+      </a>
+      <a routerLink="/admin/categorias" routerLinkActive="active">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h10" />
+        </svg>
+        Categorías
+      </a>
+      <a routerLink="/admin/eventos" routerLinkActive="active">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2" /><path d="M8 3v4M16 3v4M3 10h18" />
+        </svg>
+        Eventos
+      </a>
+      <a routerLink="/admin/mensajes" routerLinkActive="active">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M4 5h16v12H7l-3 3z" />
+        </svg>
+        Mensajes
+      </a>
+    </nav>
+
+    <div class="admin-side-footer">
+      <div class="admin-user">{{ auth.currentUser()?.name ?? 'Administrador' }}</div>
+      <div style="color: rgba(255, 255, 255, 0.45); font-size: 0.7rem; margin-bottom: 10px">
+        {{ auth.currentUser()?.email }}
+      </div>
+      <a class="footer-link" routerLink="/" style="padding: 4px 0">Ver sitio</a>
+      <button type="button" class="btn-link-cdc" style="color: rgba(255, 255, 255, 0.7); margin-top: 4px" (click)="logout()">
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+    <router-outlet />
+  </div>
+</div>
