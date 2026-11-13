@@ -116,8 +116,14 @@ El `prebuild` genera `public/_redirects` con:
 Eso permite que el frontend siga usando `apiUrl: '/api'` y que las imágenes
 subidas se vean sin cambiar el código.
 
-Si `RENDER_API_URL` no está definida en Netlify, el build falla a propósito
-para no publicar apuntando a un placeholder.
+La URL de Render se puede definir con `RENDER_API_URL`. Si no está definida,
+se usa por defecto:
+
+```text
+https://ciudades-del-conocimiento-backend.onrender.com
+```
+
+Si cambiás el nombre del servicio en Render, actualizá esa variable en Netlify.
 
 ## Vista previa
 
