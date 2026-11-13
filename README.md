@@ -89,6 +89,36 @@ El frontend incluye `Dockerfile` y `nginx.conf` para servirse con Nginx. El `doc
 - Las imágenes de ejemplo están en `public/assets/images/`.
 - Para cambiar textos institucionales, editar los componentes de `features/`.
 
+## Deploy en Netlify
+
+El repo incluye `netlify.toml` y un script que genera las reglas de proxy.
+
+1. En Netlify: **Add new site** → **Import an existing project** → elegir el
+   repositorio del frontend.
+2. Netlify toma la configuración de `netlify.toml`:
+   - Build: `npm ci && npm run build`
+   - Publish: `dist/frontend/browser`
+   - Node: 22
+3. Configurar la variable de entorno:
+
+```env
+RENDER_API_URL=https://ciudades-conocimiento-api.onrender.com
+```
+
+4. Desplegar.
+
+El `prebuild` genera `public/_redirects` con:
+
+- `/api/*` → Render.
+- `/uploads/*` → Render.
+- `/*` → `index.html` para que funcionen las rutas de Angular.
+
+Eso permite que el frontend siga usando `apiUrl: '/api'` y que las imágenes
+subidas se vean sin cambiar el código.
+
+Si `RENDER_API_URL` no está definida en Netlify, el build falla a propósito
+para no publicar apuntando a un placeholder.
+
 ## Vista previa
 
 ![Home](docs/home.png)
