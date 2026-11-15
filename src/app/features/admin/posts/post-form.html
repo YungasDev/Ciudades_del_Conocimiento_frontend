@@ -114,7 +114,7 @@
         <div class="form-field">
           <label class="form-label" for="coverFile">Subir imagen</label>
           <input id="coverFile" class="form-control-cdc" type="file" accept="image/jpeg,image/png,image/webp,image/avif" (change)="onFileSelected($event)" [disabled]="uploading()" />
-          <span class="form-hint">JPG, PNG, WebP o AVIF. Máximo 5 MB.</span>
+          <span class="form-hint">JPG, PNG, WebP o AVIF. Máximo 5 MB. Se optimiza a WebP.</span>
           @if (uploading()) {
             <span class="form-hint">Subiendo imagen...</span>
           }

@@ -328,8 +328,24 @@
 
       <div class="org-connector" aria-hidden="true"></div>
 
+      <div class="org-staff-row">
+        @for (member of coordination; track member.name) {
+          <div [class]="'org-card org-card--' + member.sector">
+            <div class="org-kicker">{{ member.area }}</div>
+            <h3>{{ member.name }}</h3>
+            <p class="org-role">{{ member.role }}</p>
+            <p class="org-detail">{{ member.detail }}</p>
+            @if (member.status) {
+              <span class="org-badge org-badge-soft">{{ member.status }}</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="org-connector" aria-hidden="true"></div>
+
       <div class="org-branches">
-        @for (lead of leads; track lead.name) {
+        @for (lead of areaLeads; track lead.name) {
           <article class="org-branch">
             <div [class]="'org-card org-card--' + lead.sector">
               <div class="org-kicker">{{ lead.area }}</div>
@@ -361,33 +377,14 @@
       </article>
     </div>
 
-    <div class="org-open">
-      <div class="section-head">
-        <div class="eyebrow">Apoyos y definiciones abiertas</div>
-        <h2 class="section-title" style="font-size: 1.7rem">Roles a confirmar</h2>
-        <p class="section-subtitle">
-          Estas funciones todavía no están asignadas formalmente. Se publican
-          como parte del proceso de organización del programa.
-        </p>
-      </div>
-
-      <div class="org-open-grid">
-        @for (item of openRoles; track item.title) {
-          <article class="org-card org-card-open">
-            <div class="d-flex justify-between align-center gap-1 flex-wrap">
-              <div class="org-kicker">{{ item.title }}</div>
-              <span class="org-status">{{ item.status }}</span>
-            </div>
-            <h3>{{ item.name }}</h3>
-            <p class="org-detail">{{ item.detail }}</p>
-          </article>
-        }
-      </div>
-    </div>
+    <p class="org-note">
+      <strong>Secretaría de la Mesa de Enlace:</strong> sin designación por
+      ahora. David Cepeda es una posibilidad, sin asignación de la función.
+    </p>
 
     <div class="alert-cdc alert-success mt-3" role="note">
       Los nombres y cargos se publican con autorización. Las funciones marcadas
-      como abiertas o a definir pueden cambiar durante la organización de la
+      como posibles o a designar pueden cambiar durante la organización de la
       Mesa de Enlace.
     </div>
 

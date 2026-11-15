@@ -64,8 +64,9 @@
         <div class="form-field">
           <label class="form-label">Logo</label>
           <input class="form-control-cdc" type="file" accept="image/jpeg,image/png,image/webp,image/avif" (change)="onLogoSelected($event)" [disabled]="uploading()" />
+          <span class="form-hint">JPG, PNG, WebP o AVIF. Se optimiza a WebP.</span>
           @if (uploading()) {
-            <span class="form-hint">Subiendo...</span>
+            <span class="form-hint">Optimizando y subiendo...</span>
           }
         </div>
 

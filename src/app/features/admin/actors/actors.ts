@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Actor } from '../../../core/models/api.models';
 import { AdminService, ActorPayload } from '../../../core/services/admin.service';
+import { optimizeToWebp } from '../../../core/utils/image';
 
 @Component({
   selector: 'app-admin-actors',
@@ -103,14 +104,16 @@ export class AdminActors implements OnInit {
     this.error.set('');
   }
 
-  onLogoSelected(event: Event): void {
+  async onLogoSelected(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
 
     this.uploading.set(true);
+    const optimized = await optimizeToWebp(file, 600, 0.9);
+
     this.admin
-      .uploadMedia(file, `Logo de ${this.form.controls.name.value || 'institución'}`)
+      .uploadMedia(optimized, `Logo de ${this.form.controls.name.value || 'institución'}`)
       .subscribe({
         next: (media) => {
           this.logoMediaId.set(media.id);

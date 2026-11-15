@@ -7,6 +7,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Category } from '../../../core/models/api.models';
 import { AdminService } from '../../../core/services/admin.service';
+import { optimizeToWebp } from '../../../core/utils/image';
 
 @Component({
   selector: 'app-admin-post-form',
@@ -84,7 +85,7 @@ export class PostForm implements OnInit {
     });
   }
 
-  onFileSelected(event: Event): void {
+  async onFileSelected(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
@@ -96,7 +97,9 @@ export class PostForm implements OnInit {
       this.form.controls.title.value.trim() ||
       'Imagen de la novedad';
 
-    this.admin.uploadMedia(file, alt).subscribe({
+    const optimized = await optimizeToWebp(file, 1600, 0.85);
+
+    this.admin.uploadMedia(optimized, alt).subscribe({
       next: (media) => {
         this.coverMediaId.set(media.id);
         this.coverUrl.set(media.path);
