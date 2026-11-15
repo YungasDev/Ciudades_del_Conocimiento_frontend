@@ -96,9 +96,6 @@
       <div class="nav-item">
         <a class="nav-link" routerLink="/agenda" routerLinkActive="active">Agenda</a>
       </div>
-      <div class="nav-item">
-        <a class="nav-link" routerLink="/contacto" routerLinkActive="active">Contacto</a>
-      </div>
     </nav>
 
     <div class="nav-actions">
@@ -143,7 +140,6 @@
       </div>
       <a class="mobile-link" routerLink="/novedades" (click)="close()">Novedades</a>
       <a class="mobile-link" routerLink="/agenda" (click)="close()">Agenda</a>
-      <a class="mobile-link" routerLink="/contacto" (click)="close()">Contacto</a>
       <a class="btn-cdc w-100 mt-2" routerLink="/contacto" [queryParams]="{ motivo: 'mesa-de-enlace' }" (click)="close()">
         Sumate a la Mesa
       </a>

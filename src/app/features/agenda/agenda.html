@@ -56,7 +56,11 @@
               <p class="mt-1">{{ event.description }}</p>
             </div>
             @if (event.ctaLabel && event.ctaUrl) {
-              <a class="btn-cdc-light" [routerLink]="event.ctaUrl">{{ event.ctaLabel }}</a>
+              <a
+                class="btn-cdc-light"
+                [routerLink]="ctaLink(event.ctaUrl).commands"
+                [queryParams]="ctaLink(event.ctaUrl).queryParams"
+              >{{ event.ctaLabel }}</a>
             }
           </article>
         }

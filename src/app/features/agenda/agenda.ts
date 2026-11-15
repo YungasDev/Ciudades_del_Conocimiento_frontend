@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EventItem } from '../../core/models/api.models';
 import { ContentService } from '../../core/services/content.service';
+import { toInternalLink } from '../../core/utils/internal-link';
 import { formatDate, formatTime, monthDay } from '../../core/utils/date';
 
 @Component({
@@ -20,6 +21,10 @@ export class Agenda implements OnInit {
   readonly formatDate = formatDate;
   readonly formatTime = formatTime;
   readonly monthDay = monthDay;
+
+  ctaLink(value: string | null) {
+    return toInternalLink(value, '/agenda');
+  }
 
   ngOnInit(): void {
     this.content.getEvents().subscribe({

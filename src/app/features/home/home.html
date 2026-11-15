@@ -158,7 +158,11 @@
           <h3>{{ nextEvent.title }}</h3>
           <p>{{ nextEvent.place }} · {{ formatDate(nextEvent.startsAt) }}</p>
         </div>
-        <a class="btn-cdc-light" [routerLink]="nextEvent.ctaUrl ?? '/agenda'">
+        <a
+          class="btn-cdc-light"
+          [routerLink]="ctaLink(nextEvent.ctaUrl).commands"
+          [queryParams]="ctaLink(nextEvent.ctaUrl).queryParams"
+        >
           {{ nextEvent.ctaLabel ?? 'Ver encuentro' }}
         </a>
       </div>

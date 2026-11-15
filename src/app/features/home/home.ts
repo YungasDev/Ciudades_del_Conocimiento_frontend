@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ContentService } from '../../core/services/content.service';
 import { EventItem, PostSummary } from '../../core/models/api.models';
+import { toInternalLink } from '../../core/utils/internal-link';
 import { formatDate, monthDay } from '../../core/utils/date';
 import { NewsCard } from '../../shared/news-card/news-card';
 
@@ -26,6 +27,10 @@ export class Home implements OnInit {
 
   readonly formatDate = formatDate;
   readonly monthDay = monthDay;
+
+  ctaLink(value: string | null) {
+    return toInternalLink(value, '/agenda');
+  }
 
   readonly pillars: Pillar[] = [
     {

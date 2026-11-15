@@ -27,10 +27,10 @@
         </div>
 
         <div class="form-field full">
-          <label class="form-label" for="excerpt">Copete *</label>
+          <label class="form-label" for="excerpt">Descripción breve *</label>
           <textarea id="excerpt" class="form-textarea-cdc" style="min-height: 90px" formControlName="excerpt" maxlength="400"></textarea>
           @if (form.controls.excerpt.touched && form.controls.excerpt.invalid) {
-            <span class="form-error">El copete debe tener al menos 20 caracteres.</span>
+            <span class="form-error">La descripción breve debe tener al menos 20 caracteres.</span>
           }
         </div>
 
