@@ -286,43 +286,115 @@
   </div>
 </section>
 
-<section class="section" id="equipo">
+<section class="section section-tinted" id="equipo">
   <div class="container-cdc">
-    <div class="section-head">
+    <div class="section-head center">
       <div class="eyebrow">Quiénes lo llevan adelante</div>
-      <h2 class="section-title">Un equipo de trabajo compartido</h2>
+      <h2 class="section-title">Organigrama del programa</h2>
       <p class="section-subtitle">
-        El programa se coordina desde el municipio con referentes de instituciones
-        educativas, del sector privado y de la comunidad. Los nombres y cargos se
-        publican solo con autorización.
+        La conducción política, la coordinación general, los referentes por sector
+        y el equipo operativo que sostienen la Mesa de Enlace.
       </p>
     </div>
 
-    <div class="values-grid">
-      <div class="value-card">
-        <h3>Coordinación general</h3>
-        <p>Articulación institucional, convocatoria y seguimiento del programa.</p>
+    <div class="org-chart" aria-label="Organigrama del programa Ciudades del Conocimiento">
+      <div class="org-top">
+        <article class="org-card org-card-lead">
+          <div class="org-kicker">Intendente</div>
+          <h3>Oscar Jayat</h3>
+          <p class="org-role">Conducción política y estratégica</p>
+          <p class="org-detail">
+            Impulso institucional del programa y articulación con el Ejecutivo
+            municipal.
+          </p>
+          <span class="org-badge">Máxima autoridad del municipio</span>
+        </article>
       </div>
-      <div class="value-card">
-        <h3>Instituciones educativas</h3>
-        <p>Vinculación con escuelas, universidades y espacios de formación.</p>
+
+      <div class="org-connector" aria-hidden="true"></div>
+
+      <div class="org-level">
+        <article class="org-card org-card-coordinator">
+          <div class="org-kicker">Coordinación general</div>
+          <h3>Gerardo Morienega</h3>
+          <p class="org-role">Secretario de Hacienda y Finanzas Públicas</p>
+          <p class="org-detail">
+            Convocatoria institucional, articulación con el Ejecutivo y apoyo de
+            otras áreas cuando sea necesario.
+          </p>
+          <span class="org-badge org-badge-soft">Vínculo con RIL · junto a Marisa</span>
+        </article>
       </div>
-      <div class="value-card">
-        <h3>Sector privado</h3>
-        <p>Contacto con empresas, PyMEs y emprendedores de la ciudad.</p>
+
+      <div class="org-connector" aria-hidden="true"></div>
+
+      <div class="org-branches">
+        @for (lead of leads; track lead.name) {
+          <article class="org-branch">
+            <div [class]="'org-card org-card--' + lead.sector">
+              <div class="org-kicker">{{ lead.area }}</div>
+              <h3>{{ lead.name }}</h3>
+              <p class="org-role">{{ lead.role }}</p>
+              <p class="org-detail">{{ lead.detail }}</p>
+            </div>
+          </article>
+        }
       </div>
-      <div class="value-card">
-        <h3>Comunidad</h3>
-        <p>Participación de organizaciones, clubes y centros vecinales.</p>
+
+      <div class="org-connector" aria-hidden="true"></div>
+
+      <article class="org-card org-team">
+        <div class="org-kicker">Equipo operativo</div>
+        <h3>Apoyo a la Mesa de Enlace</h3>
+        <p class="org-detail">
+          Organización, análisis de datos, herramientas digitales y formación.
+          Las tareas se organizan según necesidades, capacidades y disponibilidad.
+        </p>
+        <div class="org-team-grid">
+          @for (person of operational; track person[0]) {
+            <div class="org-person">
+              <strong>{{ person[0] }}</strong>
+              <span>{{ person[1] }}</span>
+            </div>
+          }
+        </div>
+      </article>
+    </div>
+
+    <div class="org-open">
+      <div class="section-head">
+        <div class="eyebrow">Apoyos y definiciones abiertas</div>
+        <h2 class="section-title" style="font-size: 1.7rem">Roles a confirmar</h2>
+        <p class="section-subtitle">
+          Estas funciones todavía no están asignadas formalmente. Se publican
+          como parte del proceso de organización del programa.
+        </p>
       </div>
-      <div class="value-card">
-        <h3>Comunicación</h3>
-        <p>Difusión de novedades, encuentros y resultados del programa.</p>
+
+      <div class="org-open-grid">
+        @for (item of openRoles; track item.title) {
+          <article class="org-card org-card-open">
+            <div class="d-flex justify-between align-center gap-1 flex-wrap">
+              <div class="org-kicker">{{ item.title }}</div>
+              <span class="org-status">{{ item.status }}</span>
+            </div>
+            <h3>{{ item.name }}</h3>
+            <p class="org-detail">{{ item.detail }}</p>
+          </article>
+        }
       </div>
-      <div class="value-card">
-        <h3>Equipo operativo</h3>
-        <p>Apoyo en datos, herramientas digitales y organización de actividades.</p>
-      </div>
+    </div>
+
+    <div class="alert-cdc alert-success mt-3" role="note">
+      Los nombres y cargos se publican con autorización. Las funciones marcadas
+      como abiertas o a definir pueden cambiar durante la organización de la
+      Mesa de Enlace.
+    </div>
+
+    <div class="text-center mt-3">
+      <a class="btn-cdc-outline" routerLink="/mesa-de-enlace">
+        Conocer la Mesa de Enlace
+      </a>
     </div>
   </div>
 </section>

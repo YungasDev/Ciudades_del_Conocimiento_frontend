@@ -32,4 +32,70 @@ export class Program {
     ['Medir resultados', 'Definir indicadores y hacer seguimiento.'],
     ['Mejorar', 'Ajustar lo que no funciona y sostener lo que sí.'],
   ];
+
+  readonly leads = [
+    {
+      area: 'Instituciones educativas',
+      name: 'Atilio Cancino',
+      role: 'Profesor de Computación y asesor del programa',
+      detail:
+        'Vínculo con la Técnica Ing. Herminio Arrieta, la Agrotécnica, la Secundaria N.º 65 y otras instituciones.',
+      sector: 'educacion',
+    },
+    {
+      area: 'Sector privado',
+      name: 'Mariana Solana',
+      role: 'Contadora pública · Directora de Habilitaciones y Permisos',
+      detail:
+        'Vínculo con la Unión de Empresarios de Libertador, comercios, servicios, PyMEs y empresas.',
+      sector: 'privado',
+    },
+    {
+      area: 'Comunidad y participación estudiantil',
+      name: 'Enzo Navarro',
+      role: 'Director de Relaciones con la Comunidad',
+      detail:
+        'Coordinación con centros vecinales, clubes y organizaciones comunitarias. Acompaña el vínculo educativo junto a Atilio.',
+      sector: 'comunidad',
+    },
+    {
+      area: 'Organismos provinciales y RIL',
+      name: 'Marisa Espinosa',
+      role: 'Subdirectora de Modernización y Estadísticas',
+      detail:
+        'Coordinación con áreas provinciales de conocimiento y modernización. Vínculo con RIL junto a Gerardo.',
+      sector: 'provincial',
+    },
+  ];
+
+  readonly operational = [
+    ['César Mercado', 'Programador junior'],
+    ['Juan Gómez', 'Programador junior'],
+    ['Jesús Salazar', 'Programador junior'],
+    ['Carla Muñoz', 'Capacitadora en Herramientas Digitales'],
+  ];
+
+  readonly openRoles = [
+    {
+      title: 'Capacitación en programación',
+      name: 'Hugo Rua',
+      detail:
+        'Apoyo técnico y pedagógico. Posible colaboración en participación estudiantil, a definir.',
+      status: 'A definir',
+    },
+    {
+      title: 'Reemplazo y comunicación',
+      name: 'David Cepeda',
+      detail:
+        'Reemplazo de Gerardo cuando lo disponga e información sobre avances del programa.',
+      status: 'A confirmar',
+    },
+    {
+      title: 'Secretaría de la Mesa de Enlace',
+      name: 'A designar',
+      detail:
+        'Sin designación por ahora. David Cepeda es una posibilidad, sin asignación de la función.',
+      status: 'Abierta',
+    },
+  ];
 }
