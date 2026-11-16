@@ -2032,6 +2032,23 @@ ol {
   border-radius: 12px;
 }
 
+.admin-brand .brand-seal {
+  width: 38px;
+  height: 38px;
+  border-width: 1.5px;
+}
+
+.admin-brand .brand-seal > span:first-child {
+  font-size: 0.7rem;
+}
+
+.admin-brand .brand-seal-dot {
+  right: 3px;
+  bottom: 4px;
+  width: 5px;
+  height: 5px;
+}
+
 .admin-brand .brand-title {
   color: var(--white);
   font-size: 0.86rem;
