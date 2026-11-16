@@ -310,6 +310,26 @@ ol {
   line-height: 1.1;
 }
 
+.brand-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  min-width: 0;
+}
+
+.brand-logo {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: 210px;
+  object-fit: contain;
+}
+
+.brand-lockup .brand-sub {
+  white-space: nowrap;
+}
+
 .brand-title {
   font-family: var(--font-display);
   font-size: 1rem;
@@ -2360,6 +2380,15 @@ ol {
 @media (max-width: 640px) {
   .container-cdc {
     width: min(100% - 28px, 1180px);
+  }
+
+  .brand-logo {
+    height: 34px;
+  }
+
+  .brand-lockup .brand-sub {
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
   }
 
   .section {
